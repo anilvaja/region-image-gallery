@@ -1,0 +1,17 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "npm install": true,
+        "/^powershell -NoProfile -Command \"Invoke-RestMethod -Uri 'http://127\\.0\\.0\\.1:5000/api/health' -Method Get \\| ConvertTo-Json\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node -e \"const http = require\\('http'\\); const req = http\\.request\\(\\{ hostname:'127\\.0\\.0\\.1', port:5000, path:'/api/health', method:'GET' \\}, res=>\\{ console\\.log\\(res\\.statusCode\\); res\\.setEncoding\\('utf8'\\); res\\.on\\('data', d=>process\\.stdout\\.write\\(d\\)\\); res\\.on\\('end', \\(\\)=>process\\.exit\\(0\\)\\); \\}\\); req\\.on\\('error', e=>\\{ console\\.error\\('ERROR', e\\.message\\); process\\.exit\\(1\\); \\}\\); req\\.end\\(\\);\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^node -e \"const http=require\\('http'\\); const req=http\\.get\\(\\{hostname:'127\\.0\\.0\\.1',port:5001,path:'/api/health'\\}, res=>\\{console\\.log\\('status',res\\.statusCode\\); res\\.on\\('data',d=>process\\.stdout\\.write\\(d\\)\\);\\}\\); req\\.on\\('error', e=>\\{console\\.error\\('ERROR', e\\.message\\); process\\.exit\\(1\\);\\}\\);\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

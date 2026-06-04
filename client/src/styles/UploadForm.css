@@ -1,0 +1,75 @@
+.upload-container {
+  width: 100%;
+}
+
+.upload-container h2 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.upload-subtitle {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.upload-form {
+  margin-bottom: 20px;
+}
+
+.upload-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #667eea;
+  color: white;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.upload-button:hover:not(:disabled) {
+  background-color: #764ba2;
+}
+
+.upload-button:disabled {
+  background-color: #999;
+}
+
+.file-info {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.no-projects-message {
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  color: #856404;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  text-align: center;
+}
+
+input[type='file'] {
+  padding: 8px;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type='file']:hover {
+  border-color: #667eea;
+}
+
+@media (max-width: 480px) {
+  .upload-container h2 {
+    font-size: 16px;
+  }
+
+  .upload-subtitle {
+    font-size: 12px;
+  }
+}
