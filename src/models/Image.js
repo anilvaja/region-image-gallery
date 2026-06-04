@@ -17,6 +17,10 @@ const Image = sequelize.define(
         key: 'id',
       },
     },
+    title: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    },
     file_url: {
       type: DataTypes.STRING(500),
       allowNull: false,

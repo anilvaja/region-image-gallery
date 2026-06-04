@@ -1,71 +1,36 @@
-const {
-  S3Client,
-  PutObjectCommand,
-  DeleteObjectCommand,
-} = require('@aws-sdk/client-s3');
 const fs = require('fs');
 const path = require('path');
 
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION || 'us-east-1',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
+const uploadsRoot = path.join(__dirname, '..', '..', 'uploads');
 
 const uploadToS3 = async (filePath, s3Key) => {
   try {
-    const fileContent = fs.readFileSync(filePath);
-    const mimetype = getMimetype(filePath);
+    const destinationPath = path.join(uploadsRoot, s3Key);
+    const destinationDir = path.dirname(destinationPath);
+    fs.mkdirSync(destinationDir, { recursive: true });
+    fs.copyFileSync(filePath, destinationPath);
 
-    const params = {
-      Bucket: process.env.AWS_S3_BUCKET,
-      Key: s3Key,
-      Body: fileContent,
-      ContentType: mimetype,
-    };
-
-    const command = new PutObjectCommand(params);
-    await s3Client.send(command);
-
-    const s3Url = `https://${process.env.AWS_S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Key}`;
-    return s3Url;
+    return destinationPath.startsWith(uploadsRoot)
+      ? destinationPath.substring(uploadsRoot.length).replace(/\\/g, '/')
+      : destinationPath;
   } catch (error) {
-    throw new Error('S3 upload failed: ' + error.message);
+    throw new Error('Local upload failed: ' + error.message);
   }
 };
 
 const deleteFromS3 = async (s3Key) => {
   try {
-    const params = {
-      Bucket: process.env.AWS_S3_BUCKET,
-      Key: s3Key,
-    };
-
-    const command = new DeleteObjectCommand(params);
-    await s3Client.send(command);
-
+    const targetPath = path.join(uploadsRoot, s3Key);
+    if (fs.existsSync(targetPath)) {
+      fs.unlinkSync(targetPath);
+    }
     return true;
   } catch (error) {
-    throw new Error('S3 deletion failed: ' + error.message);
+    throw new Error('Local delete failed: ' + error.message);
   }
-};
-
-const getMimetype = (filePath) => {
-  const ext = path.extname(filePath).toLowerCase();
-  const mimeTypes = {
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg',
-    '.png': 'image/png',
-    '.gif': 'image/gif',
-    '.webp': 'image/webp',
-  };
-  return mimeTypes[ext] || 'image/jpeg';
 };
 
 module.exports = {
   uploadToS3,
   deleteFromS3,
-  getMimetype,
 };

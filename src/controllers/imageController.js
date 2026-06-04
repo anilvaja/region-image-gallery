@@ -54,10 +54,12 @@ const uploadImage = async (req, res) => {
 
     const originalUrl = `/uploads/${projectId}/${req.file.filename}`;
     const optimizedUrl = `/uploads/${projectId}/${optimizedFilename}`;
+    const title = req.file.originalname || req.file.filename;
 
     // Save image metadata to database
     const image = await Image.create({
       project_id: projectId,
+      title,
       file_url: originalUrl,
       optimized_url: optimizedUrl,
       file_name: req.file.filename,

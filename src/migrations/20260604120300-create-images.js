@@ -21,12 +21,24 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      url: {
-        type: Sequelize.STRING,
+      file_url: {
+        type: Sequelize.STRING(500),
         allowNull: false,
       },
-      s3_key: {
-        type: Sequelize.STRING,
+      optimized_url: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
+      },
+      file_name: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      file_size: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      mime_type: {
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       created_at: {
