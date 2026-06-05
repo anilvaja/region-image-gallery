@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./models');
 const { UPLOADS_DIR } = require('./config/paths');
+const { migrateLegacyUploads } = require('./utils/migrateLegacyUploads');
 
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
@@ -20,6 +21,9 @@ const fs = require('fs');
 if (!fs.existsSync(UPLOADS_DIR)) {
   fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
+
+// Relocate any files left under src/uploads by older versions into UPLOADS_DIR.
+migrateLegacyUploads();
 
 // Serve uploaded files from local uploads directory
 app.use('/uploads', express.static(UPLOADS_DIR));
