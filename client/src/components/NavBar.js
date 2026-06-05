@@ -31,6 +31,9 @@ const NavBar = () => {
         <NavLink to="/project" className="navbar-link">
           Project
         </NavLink>
+        <NavLink to="/settings" className="navbar-link">
+          Settings
+        </NavLink>
       </div>
 
       <div className="navbar-user">

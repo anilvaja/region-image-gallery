@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import RegionPage from './pages/RegionPage';
 import ProjectPage from './pages/ProjectPage';
+import SettingsPage from './pages/SettingsPage';
 import './styles/App.css';
 
 // Protected Route Component
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/region" element={<RegionPage />} />
           <Route path="/project" element={<ProjectPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
 
         {/* Backward-compatible redirects */}
