@@ -14,10 +14,16 @@ const register = async (req, res) => {
       });
     }
 
-    // Check if user already exists
+    // Check if user already exists (email)
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(409).json({ error: 'User with this email already exists' });
+    }
+
+    // Check if the name is already taken
+    const existingName = await User.findOne({ where: { name } });
+    if (existingName) {
+      return res.status(409).json({ error: 'This name is already taken' });
     }
 
     // Verify region exists
@@ -49,6 +55,14 @@ const register = async (req, res) => {
       token,
     });
   } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      const field = error.errors && error.errors[0] && error.errors[0].path;
+      const message =
+        field === 'name'
+          ? 'This name is already taken'
+          : 'User with this email already exists';
+      return res.status(409).json({ error: message });
+    }
     console.error('Register error:', error);
     res.status(500).json({ error: 'Registration failed: ' + error.message });
   }
