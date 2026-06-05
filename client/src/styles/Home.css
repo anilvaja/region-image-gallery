@@ -1,0 +1,90 @@
+.home {
+  width: 100%;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.home-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e8b84b;
+  margin: 0 0 8px;
+}
+
+.home-heading {
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.home-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-group label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #a4a4ad;
+}
+
+.filter-group select {
+  min-width: 200px;
+  padding: 10px 14px;
+  background: #161619;
+  color: #f3f3f5;
+  border: 1px solid #2c2c32;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: #e8b84b;
+}
+
+.filter-clear {
+  padding: 10px 16px;
+  background: transparent;
+  color: #f3f3f5;
+  border: 1px solid #34343a;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.filter-clear:hover {
+  background: #1c1c20;
+}
+
+.filter-count {
+  font-size: 13px;
+  color: #6f6f78;
+  padding-bottom: 10px;
+}
+
+.home-status {
+  text-align: center;
+  padding: 80px 0;
+  color: #a4a4ad;
+}
+
+.home-error {
+  color: #ff6b6b;
+}

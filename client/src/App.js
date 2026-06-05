@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import RegionPage from './pages/RegionPage';
+import ProjectPage from './pages/ProjectPage';
 import './styles/App.css';
 
 // Protected Route Component
@@ -17,15 +20,23 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route
-          path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Layout />
             </ProtectedRoute>
           }
-        />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        >
+          <Route path="/home" element={<Home />} />
+          <Route path="/region" element={<RegionPage />} />
+          <Route path="/project" element={<ProjectPage />} />
+        </Route>
+
+        {/* Backward-compatible redirects */}
+        <Route path="/dashboard" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </BrowserRouter>
   );

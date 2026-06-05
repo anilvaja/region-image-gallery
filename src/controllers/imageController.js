@@ -1,4 +1,4 @@
-const { Image, Project, User } = require('../models');
+const { Image, Project, User, Region } = require('../models');
 const { validateImageFile, processImage } = require('../utils/imageProcessor');
 const path = require('path');
 const fs = require('fs');
@@ -152,6 +152,10 @@ const getGallery = async (req, res) => {
             {
               model: User,
               attributes: ['id', 'name', 'email'],
+            },
+            {
+              model: Region,
+              attributes: ['id', 'name'],
             },
           ],
         },
