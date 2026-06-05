@@ -52,7 +52,7 @@ const Register = () => {
       localStorage.setItem('userRegionId', user.region_id);
       localStorage.setItem('userName', user.name);
 
-      navigate('/dashboard');
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');
     } finally {

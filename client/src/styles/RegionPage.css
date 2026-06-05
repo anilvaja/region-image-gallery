@@ -1,0 +1,69 @@
+.region-page {
+  width: 100%;
+}
+
+.region-header {
+  margin-bottom: 28px;
+}
+
+.region-header h1 {
+  font-size: 30px;
+  margin: 0 0 6px;
+}
+
+.region-header p {
+  color: #a4a4ad;
+  margin: 0;
+}
+
+.region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.region-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px;
+  background: #161619;
+  border: 1px solid #26262c;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.region-card:hover {
+  transform: translateY(-3px);
+  border-color: #e8b84b;
+}
+
+.region-card-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f3f3f5;
+}
+
+.region-card-count {
+  font-size: 13px;
+  color: #a4a4ad;
+}
+
+.region-card-cta {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #e8b84b;
+}
+
+.region-status {
+  text-align: center;
+  padding: 80px 0;
+  color: #a4a4ad;
+}
+
+.region-error {
+  color: #ff6b6b;
+}

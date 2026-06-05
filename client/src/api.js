@@ -40,6 +40,11 @@ export const projectAPI = {
   deleteProject: (projectId) => api.delete(`/projects/${projectId}`),
 };
 
+// Region endpoints
+export const regionAPI = {
+  getRegions: () => api.get('/regions'),
+};
+
 // Image endpoints
 export const imageAPI = {
   uploadImage: (projectId, file) => {

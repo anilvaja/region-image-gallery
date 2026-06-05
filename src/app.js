@@ -8,6 +8,7 @@ const { migrateLegacyUploads } = require('./utils/migrateLegacyUploads');
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const imageRoutes = require('./routes/imageRoutes');
+const regionRoutes = require('./routes/regionRoutes');
 
 const app = express();
 
@@ -32,6 +33,7 @@ app.use('/uploads', express.static(UPLOADS_DIR));
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/regions', regionRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
