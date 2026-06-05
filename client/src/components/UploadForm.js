@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { imageAPI, projectAPI } from '../api';
+import { imageAPI, projectAPI, settingsAPI } from '../api';
 import '../styles/UploadForm.css';
 
 const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
@@ -9,6 +9,8 @@ const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [maxImages, setMaxImages] = useState(10);
+  const [maxFileSizeMb, setMaxFileSizeMb] = useState(5);
 
   const userRegionId = localStorage.getItem('userRegionId');
 
@@ -16,6 +18,17 @@ const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
     fetchProjects();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectsVersion]);
+
+  useEffect(() => {
+    settingsAPI
+      .getSettings()
+      .then((res) => {
+        const s = res.data.settings || {};
+        if (s.max_images_per_project != null) setMaxImages(s.max_images_per_project);
+        if (s.max_file_size_mb != null) setMaxFileSizeMb(s.max_file_size_mb);
+      })
+      .catch(() => {});
+  }, []);
 
   const fetchProjects = async () => {
     try {
@@ -40,8 +53,8 @@ const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      if (selectedFile.size > 5 * 1024 * 1024) {
-        setError('File size must be less than 5MB');
+      if (selectedFile.size > maxFileSizeMb * 1024 * 1024) {
+        setError(`File size must be less than ${maxFileSizeMb}MB`);
         setFile(null);
       } else if (!selectedFile.type.startsWith('image/')) {
         setError('File must be an image');
@@ -82,7 +95,7 @@ const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
     <div className="upload-container">
       <h2>Upload Image</h2>
       <p className="upload-subtitle">
-        Upload images to your projects (max 10 per project, 5MB file size)
+        Upload images to your projects (max {maxImages} per project, {maxFileSizeMb}MB file size)
       </p>
 
       {error && <div className="alert alert-error">{error}</div>}

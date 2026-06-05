@@ -4,8 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const { UPLOADS_DIR } = require('../config/paths');
-
-const MAX_IMAGES_PER_PROJECT = parseInt(process.env.MAX_IMAGES_PER_PROJECT) || 10;
+const { getSettings } = require('../utils/settings');
 
 // Upload image to a project
 const uploadImage = async (req, res) => {
@@ -38,11 +37,12 @@ const uploadImage = async (req, res) => {
       });
     }
 
-    // Check image count limit
+    // Check image count limit (read from configurable settings)
+    const { max_images_per_project: maxImagesPerProject } = await getSettings();
     const imageCount = await Image.count({ where: { project_id: projectId } });
-    if (imageCount >= MAX_IMAGES_PER_PROJECT) {
+    if (imageCount >= maxImagesPerProject) {
       return res.status(400).json({
-        error: `Maximum ${MAX_IMAGES_PER_PROJECT} images per project reached`,
+        error: `Maximum ${maxImagesPerProject} images per project reached`,
       });
     }
 

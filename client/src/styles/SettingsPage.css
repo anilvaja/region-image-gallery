@@ -1,0 +1,99 @@
+.settings-page {
+  width: 100%;
+}
+
+.settings-header {
+  margin-bottom: 28px;
+}
+
+.settings-header h1 {
+  font-size: 30px;
+  margin: 0 0 6px;
+}
+
+.settings-header p {
+  color: #a4a4ad;
+  margin: 0;
+}
+
+.settings-card {
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px;
+  background: #161619;
+  border: 1px solid #26262c;
+  border-radius: 14px;
+}
+
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f3f3f5;
+}
+
+.settings-field input {
+  padding: 10px 12px;
+  background: #0e0e10;
+  border: 1px solid #33333a;
+  border-radius: 8px;
+  color: #f3f3f5;
+  font-size: 15px;
+}
+
+.settings-field input:focus {
+  outline: none;
+  border-color: #e8b84b;
+}
+
+.settings-hint {
+  font-size: 12px;
+  color: #8a8a93;
+}
+
+.settings-save {
+  align-self: flex-start;
+  padding: 11px 22px;
+  background: #e8b84b;
+  color: #1a1a1d;
+  font-weight: 600;
+  font-size: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.settings-save:hover {
+  opacity: 0.9;
+}
+
+.settings-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settings-message {
+  font-size: 14px;
+}
+
+.settings-error {
+  color: #ff6b6b;
+}
+
+.settings-success {
+  color: #6bd49a;
+}
+
+.settings-status {
+  text-align: center;
+  padding: 80px 0;
+  color: #a4a4ad;
+}

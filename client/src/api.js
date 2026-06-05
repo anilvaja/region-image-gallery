@@ -45,6 +45,12 @@ export const regionAPI = {
   getRegions: () => api.get('/regions'),
 };
 
+// Settings endpoints
+export const settingsAPI = {
+  getSettings: () => api.get('/settings'),
+  updateSettings: (settings) => api.put('/settings', settings),
+};
+
 // Image endpoints
 export const imageAPI = {
   uploadImage: (projectId, file) => {

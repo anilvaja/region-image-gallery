@@ -3,6 +3,7 @@ const Region = require('./Region');
 const User = require('./User');
 const Project = require('./Project');
 const Image = require('./Image');
+const Setting = require('./Setting');
 
 // Define associations
 User.belongsTo(Region, { foreignKey: 'region_id' });
@@ -23,4 +24,5 @@ module.exports = {
   User,
   Project,
   Image,
+  Setting,
 };
