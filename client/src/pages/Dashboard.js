@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProjectManager from '../components/ProjectManager';
 import UploadForm from '../components/UploadForm';
@@ -9,6 +9,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const userName = localStorage.getItem('userName');
   const userRegionId = localStorage.getItem('userRegionId');
+  const [projectsVersion, setProjectsVersion] = useState(0);
+  const [galleryVersion, setGalleryVersion] = useState(0);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -36,15 +38,20 @@ const Dashboard = () => {
 
       <div className="dashboard-content">
         <div className="dashboard-section">
-          <ProjectManager />
+          <ProjectManager
+            onProjectsChange={() => setProjectsVersion((v) => v + 1)}
+          />
         </div>
 
         <div className="dashboard-section">
-          <UploadForm />
+          <UploadForm
+            projectsVersion={projectsVersion}
+            onUploadSuccess={() => setGalleryVersion((v) => v + 1)}
+          />
         </div>
 
         <div className="dashboard-section">
-          <Gallery />
+          <Gallery refreshKey={galleryVersion} />
         </div>
       </div>
     </div>

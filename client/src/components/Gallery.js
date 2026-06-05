@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { imageAPI, resolveAssetUrl } from '../api';
 import '../styles/Gallery.css';
 
-const Gallery = () => {
+const Gallery = ({ refreshKey }) => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     fetchGallery();
-  }, []);
+  }, [refreshKey]);
 
   const fetchGallery = async () => {
     try {

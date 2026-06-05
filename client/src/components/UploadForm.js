@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { imageAPI, projectAPI } from '../api';
 import '../styles/UploadForm.css';
 
-const UploadForm = () => {
+const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState('');
   const [file, setFile] = useState(null);
@@ -14,7 +14,8 @@ const UploadForm = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectsVersion]);
 
   const fetchProjects = async () => {
     try {
@@ -24,9 +25,13 @@ const UploadForm = () => {
         (p) => p.region_id === parseInt(userRegionId)
       );
       setProjects(userProjects);
-      if (userProjects.length > 0) {
-        setSelectedProject(userProjects[0].id);
-      }
+      setSelectedProject((current) => {
+        const stillExists = userProjects.some(
+          (p) => String(p.id) === String(current)
+        );
+        if (current && stillExists) return current;
+        return userProjects.length > 0 ? userProjects[0].id : '';
+      });
     } catch (err) {
       setError('Failed to load projects: ' + err.message);
     }
@@ -65,6 +70,7 @@ const UploadForm = () => {
       setFile(null);
       // Reset file input
       e.target.reset();
+      if (onUploadSuccess) onUploadSuccess();
     } catch (err) {
       setError('Upload failed: ' + err.message);
     } finally {
