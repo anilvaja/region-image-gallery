@@ -1,6 +1,7 @@
 const express = require('express');
 const {
   createProject,
+  updateProject,
   getUserProjects,
   getProjectById,
   deleteProject,
@@ -21,6 +22,9 @@ router.get('/', getUserProjects);
 
 // GET /projects/:projectId - Get single project
 router.get('/:projectId', getProjectById);
+
+// PUT /projects/:projectId - Update a project (title/description)
+router.put('/:projectId', updateProject);
 
 // DELETE /projects/:projectId - Delete a project
 router.delete('/:projectId', deleteProject);

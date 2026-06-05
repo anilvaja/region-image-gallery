@@ -13,6 +13,8 @@ const Project = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    // Note: titles are unique per region, enforced by the
+    // `projects_region_title_unique` composite index (see migrations).
     description: {
       type: DataTypes.TEXT,
       allowNull: true,

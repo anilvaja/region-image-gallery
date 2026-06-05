@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { Project, User, Region } = require('../models');
 
 // Create a new project
@@ -33,9 +34,19 @@ const createProject = async (req, res) => {
       return res.status(404).json({ error: 'Region not found' });
     }
 
+    // Enforce unique project title within a region
+    const duplicate = await Project.findOne({
+      where: { region_id, title: title.trim() },
+    });
+    if (duplicate) {
+      return res.status(409).json({
+        error: 'A project with this title already exists in this region',
+      });
+    }
+
     // Create project
     const project = await Project.create({
-      title,
+      title: title.trim(),
       description,
       user_id: userId,
       region_id,
@@ -53,8 +64,74 @@ const createProject = async (req, res) => {
       },
     });
   } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return res.status(409).json({
+        error: 'A project with this title already exists in this region',
+      });
+    }
     console.error('Create project error:', error);
     res.status(500).json({ error: 'Failed to create project: ' + error.message });
+  }
+};
+
+// Update a project (title/description)
+const updateProject = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { title, description } = req.body;
+    const userId = req.user.user_id;
+
+    if (!title || !title.trim()) {
+      return res.status(400).json({ error: 'Project title is required' });
+    }
+
+    const project = await Project.findOne({
+      where: { id: projectId, user_id: userId },
+    });
+
+    if (!project) {
+      return res.status(404).json({
+        error: 'Project not found or access denied',
+      });
+    }
+
+    // Enforce unique title within the project's region (excluding itself)
+    const duplicate = await Project.findOne({
+      where: {
+        region_id: project.region_id,
+        title: title.trim(),
+        id: { [Op.ne]: project.id },
+      },
+    });
+    if (duplicate) {
+      return res.status(409).json({
+        error: 'A project with this title already exists in this region',
+      });
+    }
+
+    project.title = title.trim();
+    project.description = description !== undefined ? description : project.description;
+    await project.save();
+
+    return res.status(200).json({
+      message: 'Project updated successfully',
+      project: {
+        id: project.id,
+        title: project.title,
+        description: project.description,
+        user_id: project.user_id,
+        region_id: project.region_id,
+        created_at: project.created_at,
+      },
+    });
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return res.status(409).json({
+        error: 'A project with this title already exists in this region',
+      });
+    }
+    console.error('Update project error:', error);
+    res.status(500).json({ error: 'Failed to update project: ' + error.message });
   }
 };
 
@@ -142,6 +219,7 @@ const deleteProject = async (req, res) => {
 
 module.exports = {
   createProject,
+  updateProject,
   getUserProjects,
   getProjectById,
   deleteProject,

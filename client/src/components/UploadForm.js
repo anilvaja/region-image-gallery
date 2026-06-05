@@ -85,7 +85,7 @@ const UploadForm = ({ projectsVersion, onUploadSuccess }) => {
       e.target.reset();
       if (onUploadSuccess) onUploadSuccess();
     } catch (err) {
-      setError('Upload failed: ' + err.message);
+      setError('Upload failed: ' + (err.response?.data?.error || err.message));
     } finally {
       setLoading(false);
     }

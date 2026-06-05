@@ -35,6 +35,8 @@ export const authAPI = {
 // Project endpoints
 export const projectAPI = {
   createProject: (projectData) => api.post('/projects', projectData),
+  updateProject: (projectId, projectData) =>
+    api.put(`/projects/${projectId}`, projectData),
   getUserProjects: () => api.get('/projects'),
   getProjectById: (projectId) => api.get(`/projects/${projectId}`),
   deleteProject: (projectId) => api.delete(`/projects/${projectId}`),

@@ -95,11 +95,68 @@
   color: #999;
 }
 
-.delete-button {
-  width: 100%;
+.project-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-actions button {
+  flex: 1;
+  min-width: 80px;
   padding: 8px;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  background-color: #007bff;
+}
+
+.edit-button:hover {
+  background-color: #0069d9;
+}
+
+.manage-button {
+  background-color: #6c757d;
+}
+
+.manage-button:hover {
+  background-color: #5a6268;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  flex: 1;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+.delete-button {
   background-color: #dc3545;
   color: white;
+  padding: 8px;
   border-radius: 4px;
   font-size: 14px;
   transition: background-color 0.3s ease;
@@ -107,6 +164,55 @@
 
 .delete-button:hover {
   background-color: #c82333;
+}
+
+.project-edit .form-group {
+  margin-bottom: 10px;
+}
+
+.project-images {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed #ddd;
+}
+
+.project-images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.project-image-item {
+  position: relative;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.project-image-thumb {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  display: block;
+}
+
+.image-delete-button {
+  width: 100%;
+  padding: 6px;
+  background-color: #dc3545;
+  color: white;
+  font-size: 12px;
+  border-radius: 0;
+}
+
+.image-delete-button:hover {
+  background-color: #c82333;
+}
+
+.no-images {
+  color: #999;
+  font-size: 13px;
 }
 
 .no-projects {
