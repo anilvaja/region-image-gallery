@@ -3,6 +3,7 @@ const { validateImageFile, processImage } = require('../utils/imageProcessor');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const { UPLOADS_DIR } = require('../config/paths');
 
 const MAX_IMAGES_PER_PROJECT = parseInt(process.env.MAX_IMAGES_PER_PROJECT) || 10;
 
@@ -197,7 +198,7 @@ const deleteImage = async (req, res) => {
     // Delete local files from uploads directory
     const deleteLocalFile = async (url) => {
       if (!url) return;
-      const localPath = path.join(__dirname, '..', url.replace(/^\//, ''));
+      const localPath = path.join(UPLOADS_DIR, url.replace(/^\/?uploads\//, ''));
       if (fs.existsSync(localPath)) {
         fs.unlinkSync(localPath);
       }

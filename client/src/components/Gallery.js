@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { imageAPI } from '../api';
+import { imageAPI, resolveAssetUrl } from '../api';
 import '../styles/Gallery.css';
 
 const Gallery = () => {
@@ -42,7 +42,7 @@ const Gallery = () => {
           {images.map((image) => (
             <div key={image.id} className="gallery-item">
               <img
-                src={image.optimized_url}
+                src={resolveAssetUrl(image.optimized_url)}
                 alt={image.file_name}
                 className="gallery-image"
               />
