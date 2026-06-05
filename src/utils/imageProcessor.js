@@ -21,8 +21,9 @@ const processImage = async (inputPath, outputPath) => {
   }
 };
 
-const validateImageFile = (file) => {
-  const maxSize = parseInt(process.env.MAX_IMAGE_SIZE) || 5242880; // 5MB
+const validateImageFile = (file, maxSizeBytes) => {
+  const maxSize =
+    maxSizeBytes || parseInt(process.env.MAX_IMAGE_SIZE) || 5242880; // 5MB
   const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
   if (!file) {

@@ -23,8 +23,14 @@ const uploadImage = async (req, res) => {
 
     tempPath = req.file.path;
 
-    // Validate image file
-    validateImageFile(req.file);
+    // Load configurable limits once and use them for both checks below.
+    const {
+      max_images_per_project: maxImagesPerProject,
+      max_file_size_mb: maxFileSizeMb,
+    } = await getSettings();
+
+    // Validate image file against the configured max size
+    validateImageFile(req.file, maxFileSizeMb * 1024 * 1024);
 
     // Verify project belongs to user
     const project = await Project.findOne({
@@ -38,7 +44,6 @@ const uploadImage = async (req, res) => {
     }
 
     // Check image count limit (read from configurable settings)
-    const { max_images_per_project: maxImagesPerProject } = await getSettings();
     const imageCount = await Image.count({ where: { project_id: projectId } });
     if (imageCount >= maxImagesPerProject) {
       return res.status(400).json({
