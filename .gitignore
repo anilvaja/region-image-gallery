@@ -1,1 +1,4 @@
 node_modules
+
+# Runtime-uploaded files (sample images under uploads/ remain tracked)
+/uploads/*/

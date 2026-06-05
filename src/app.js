@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./models');
+const { UPLOADS_DIR } = require('./config/paths');
 
 const authRoutes = require('./routes/authRoutes');
 const projectRoutes = require('./routes/projectRoutes');
@@ -16,14 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Ensure uploads directory exists
 const fs = require('fs');
-const path = require('path');
-const uploadsDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 }
 
 // Serve uploaded files from local uploads directory
-app.use('/uploads', express.static(uploadsDir));
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // Routes
 app.use('/api/auth', authRoutes);

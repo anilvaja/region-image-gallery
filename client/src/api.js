@@ -2,6 +2,17 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
+// Origin that serves static assets (uploaded images), i.e. the API base without
+// the trailing `/api`. Uploaded image URLs are stored as `/uploads/...` paths
+// relative to the backend, so they must be resolved against this origin.
+export const ASSET_BASE_URL = API_BASE_URL.replace(/\/api\/?$/, '');
+
+export const resolveAssetUrl = (url) => {
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  return `${ASSET_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
 const api = axios.create({
   baseURL: API_BASE_URL,
 });

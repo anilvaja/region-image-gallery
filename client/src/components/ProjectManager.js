@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { projectAPI } from '../api';
 import '../styles/ProjectManager.css';
 
-const ProjectManager = () => {
+const ProjectManager = ({ onProjectsChange }) => {
   const [projects, setProjects] = useState([]);
   const [newProjectTitle, setNewProjectTitle] = useState('');
   const [newProjectDesc, setNewProjectDesc] = useState('');
@@ -50,6 +50,7 @@ const ProjectManager = () => {
       setNewProjectTitle('');
       setNewProjectDesc('');
       fetchProjects();
+      if (onProjectsChange) onProjectsChange();
     } catch (err) {
       setError('Failed to create project: ' + err.message);
     } finally {
@@ -66,6 +67,7 @@ const ProjectManager = () => {
       await projectAPI.deleteProject(projectId);
       setSuccess('Project deleted successfully!');
       fetchProjects();
+      if (onProjectsChange) onProjectsChange();
     } catch (err) {
       setError('Failed to delete project: ' + err.message);
     }

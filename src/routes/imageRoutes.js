@@ -9,6 +9,7 @@ const {
   deleteImage,
 } = require('../controllers/imageController');
 const { authenticateJWT } = require('../middleware/auth');
+const { UPLOADS_DIR } = require('../config/paths');
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const projectId = req.params.projectId;
-    const uploadDir = path.join(__dirname, '..', 'uploads', String(projectId));
+    const uploadDir = path.join(UPLOADS_DIR, String(projectId));
     fs.mkdirSync(uploadDir, { recursive: true });
     cb(null, uploadDir);
   },
